@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sanjay Pandey</title>
+    <link>http://sanzay.me/</link>
+    <description>Recent content on Sanjay Pandey</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright © 2020, Sanjay Pandey; all rights reserved.</copyright>
+    <lastBuildDate>Sat, 16 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://sanzay.me/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About</title>
+      <link>http://sanzay.me/about/</link>
+      <pubDate>Sat, 16 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://sanzay.me/about/</guid>
+      <description>Hey! I&amp;rsquo;m Sanjay Pandey. I work in Unacademy as Engineering Lead.</description>
+    </item>
+    
+    <item>
+      <title>Protocol Buffer Basics in Go</title>
+      <link>http://sanzay.me/post/protocol-buffer-intro/</link>
+      <pubDate>Sat, 16 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://sanzay.me/post/protocol-buffer-intro/</guid>
+      <description>&lt;p&gt;It is yet another data format, just like XML or JSON. It is smaller and faster to transport over wire than JSON or XML.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
