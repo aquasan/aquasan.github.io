@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+    <title>Protocol Buffer Basics · Sanjay Pandey</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    
+    <link rel="stylesheet" href="http://sanzay.me/style.main.min.fea2b5a40e271564194d1403060fdb3814c6ff06c055dc247388f0b5325eee77.css" />
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-166847817-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body class=" post-template ">
+
+    <div class="site-wrapper">
+
+<header class="site-header"><div class="outer site-nav-main">
+    <div class="inner"><nav class="site-nav">
+    <div class="site-nav-left">
+        
+            <a class="site-nav-logo" href="http://sanzay.me/">Sanjay Pandey</a>
+        
+        
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem"><a href="/about">about</a></li>
+                
+                <li class="nav-home" role="menuitem"><a href="/articles">Articles</a></li>
+                
+            </ul>
+        </div>
+        
+    </div>
+</nav>
+
+</div>
+</div>
+</header>
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post  no-image ">
+
+            <header class="post-full-header">
+
+                
+                    
+                    <section class="post-full-tags">
+                        <a href="/tags/golang">Golang</a>
+                    </section>
+                
+
+                <h1 class="post-full-title">Protocol Buffer Basics</h1>
+
+                
+
+                <div class="post-full-byline">
+                    <section class="post-full-byline-content">
+
+                        <ul class="author-list">
+    <li class="author-list-item">
+        <div class="author-card">
+            <div class="author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg>
+</div>
+            <div class="author-info">
+                <div class="author-info">
+                    <h2>Sanjay Pandey</h2>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="author-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg>
+</a>
+    </li>
+</ul>
+
+                        <section class="post-full-byline-meta">
+                            
+                                <h4 class="author-name">Sanjay Pandey</h4>
+                            
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="2020-123-03">30 March 2020</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 3 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            
+            <figure class="post-full-image">
+                <img src="/images/protocol_buffer.png" alt="Protocol Buffer Basics" />
+            </figure>
+            
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p>It is yet another data format, just like XML or JSON. It is smaller and faster to transport over wire than JSON or XML.</p>
+<p>It is widely used for communication protocols and data storage. It is widely being adopted over JSON or XML for being language agnostic, smaller in size and faster to transport. We just have to define the schema and rest is taken care of by protocol buffer. we can use special generated source code to easily write and read structured data to and from a variety of data streams and using a variety of languages.</p>
+<h2 id="how-they-work-">How they work ?</h2>
+<p>We start by writing the schema of data to be serialised in proto files. The protocol buffer message contains name-value pairs. Suppose we want to define schema for Person, it could be defined as -</p>
+<pre><code>syntax = &quot;proto3&quot;;
+
+message Person {
+    string name = 1;
+    string email = 2;
+    string city = 3;
+    string state = 4;
+    string country = 5;
+    int32 age = 6;
+    string phone = 7;
+}
+</code></pre><p>After defining the schema, we compile using the protocol buffer compiler for your application’s language on your .proto file to generate data access classes. If we compile for golang , the data access class will look like</p>
+<p>Now we can use this for serialising and deserialising data.</p>
+<pre><code>person := &amp;pb.Person{}
+person.Name = &quot;test&quot;
+.... other fields ...
+out, err := proto.Marshal(person)
+// writing to file
+if err != nil {
+        log.Fatalln(&quot;Failed to encode person:&quot;, err)
+}
+if err := ioutil.WriteFile(&quot;phones&quot;, out, 0644); err != nil {
+        log.Fatalln(&quot;Failed to write person:&quot;, err)
+}
+</code></pre><pre><code>in, err := ioutil.ReadFile(&quot;persons&quot;)
+if err != nil {
+        log.Fatalln(&quot;Error reading file:&quot;, err)
+}
+person := &amp;pb.Person{}
+if err := proto.Unmarshal(in, person); err != nil {
+        log.Fatalln(&quot;Failed to parse person list:&quot;, err)
+}
+</code></pre><h2 id="why-should-you-use-it-">Why should you use it ?</h2>
+<p>You could have done above using any other data format easily, lets say if we have to do this without protocol buffer, then in python we can do this as :</p>
+<pre><code>import json
+# open file for storing data
+
+f = open(&quot;data.json&quot;, w)
+
+# create object
+person = {&quot;name&quot;: &quot;test&quot;, ...}
+
+# store in file
+f.write(json.dumps(person))
+f.close()
+</code></pre><pre><code>import json
+
+# open file
+f = open(&quot;data.json&quot;)
+
+# read data
+line = f.readline()
+
+#deserialize
+data = json.loads(line)
+</code></pre><p>If you closely observe, we have done almost same in python, but what makes protocol buffer so special ? . The protocol buffer message size is 3 to 10 times smaller, meaning we can store more efficiently or transport easily over slow networks. They are also 20 to 100 times faster . They are not schemaless unlike json, which makes it less prone to breaking changes over the time. It provides easy language interoperability.</p>
+<h2 id="when-should-you-use-it-">When should you use it ?</h2>
+<p>Protocol Buffer offer compelling advantages over other data formats for sending data over wire being smaller in size and faster. They are best suited for internal service communication. We can use them for browser to server communication, but being non readable, they pose debugging and development challenges.</p>
+
+<style>
+.canon { background: white; width: 100%; height: auto;}
+</style>
+                </div>
+            </section>
+
+        </article>
+
+    </div>
+</main>
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+    
+    <article class="read-next-card">
+        <header class="read-next-card-header">
+            <h3><span>More in</span> <a href="/tags/golang">Golang</a></h3>
+        </header>
+        <div class="read-next-card-content">
+            <ul>
+                
+            </ul>
+        </div>
+    </article>
+<article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://sanzay.me/blog/container-101/">
+    
+                <header class="post-card-header">
+                    
+                        
+                        <div class="post-card-primary-tag">Container</div>
+                    
+
+                    <h2 class="post-card-title">Container 101</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>It is a way to create virtual environment by using an isolated process on host Operating System.</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip">Sanjay Pandey</div>
+                            <a href="https://test.com" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg>
+</a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span>Sanjay Pandey</span>
+                        <span class="post-card-byline-date"><time datetime="2019-129-09">14 September 2019</time>
+                            <span class="bull">&bull;</span> 1 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+
+            
+        </div>
+    </div>
+</aside>
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://sanzay.me/">Sanjay Pandey</a> &copy; 2020</section>
+                <nav class="site-footer-nav">
+                    <a href="http://sanzay.me/">Latest Posts</a>
+                    
+                    <a href="https://twitter.com/psanzayy" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://github.com/aquasan" target="_blank" rel="noopener">Github</a>
+                    <a href="https://jonathanjanssens.com" target="_blank" rel="noopener" style="opacity: 0.5;">Hugo Casper3 by Jonathan Janssens</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+</html>
