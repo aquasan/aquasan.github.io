@@ -6,7 +6,7 @@
 
     
     
-    <title>Protocol Buffer Basics · Sanjay Pandey</title>
+    <title>Container 101 · Sanjay Pandey</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -53,11 +53,11 @@
                 
                     
                     <section class="post-full-tags">
-                        <a href="/tags/golang">Golang</a>
+                        <a href="/tags/container">Container</a>
                     </section>
                 
 
-                <h1 class="post-full-title">Protocol Buffer Basics</h1>
+                <h1 class="post-full-title">Container 101</h1>
 
                 
 
@@ -85,8 +85,8 @@
                                 <h4 class="author-name">Sanjay Pandey</h4>
                             
                             <div class="byline-meta-content">
-                                <time class="byline-meta-date" datetime="2020-125-05">16 May 2020</time>
-                                <span class="byline-reading-time"><span class="bull">&bull;</span> 3 min read</span>
+                                <time class="byline-meta-date" datetime="2019-129-09">14 September 2019</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 1 min read</span>
                             </div>
                         </section>
 
@@ -97,75 +97,14 @@
             </header>
 
             
-            <figure class="post-full-image">
-                <img src="/images/protocol_buffer.png" alt="Protocol Buffer Basics" />
-            </figure>
-            
 
             <section class="post-full-content">
                 <div class="post-content">
-                    <p>It is yet another data format, just like XML or JSON. It is smaller and faster to transport over wire than JSON or XML.</p>
-<p>It is widely used for communication protocols and data storage. It is widely being adopted over JSON or XML for being language agnostic, smaller in size and faster to transport. We just have to define the schema and rest is taken care of by protocol buffer. we can use special generated source code to easily write and read structured data to and from a variety of data streams and using a variety of languages.</p>
-<h2 id="how-they-work-">How they work ?</h2>
-<p>We start by writing the schema of data to be serialised in proto files. The protocol buffer message contains name-value pairs. Suppose we want to define schema for Person, it could be defined as -</p>
-<pre><code>syntax = &quot;proto3&quot;;
-
-message Person {
-    string name = 1;
-    string email = 2;
-    string city = 3;
-    string state = 4;
-    string country = 5;
-    int32 age = 6;
-    string phone = 7;
-}
-</code></pre><p>After defining the schema, we compile using the protocol buffer compiler for your application’s language on your .proto file to generate data access classes. If we compile for golang , the data access class will look like</p>
-<p>Now we can use this for serialising and deserialising data.</p>
-<pre><code>person := &amp;pb.Person{}
-person.Name = &quot;test&quot;
-.... other fields ...
-out, err := proto.Marshal(person)
-// writing to file
-if err != nil {
-        log.Fatalln(&quot;Failed to encode person:&quot;, err)
-}
-if err := ioutil.WriteFile(&quot;phones&quot;, out, 0644); err != nil {
-        log.Fatalln(&quot;Failed to write person:&quot;, err)
-}
-</code></pre><pre><code>in, err := ioutil.ReadFile(&quot;persons&quot;)
-if err != nil {
-        log.Fatalln(&quot;Error reading file:&quot;, err)
-}
-person := &amp;pb.Person{}
-if err := proto.Unmarshal(in, person); err != nil {
-        log.Fatalln(&quot;Failed to parse person list:&quot;, err)
-}
-</code></pre><h2 id="why-should-you-use-it-">Why should you use it ?</h2>
-<p>You could have done above using any other data format easily, lets say if we have to do this without protocol buffer, then in python we can do this as :</p>
-<pre><code>import json
-# open file for storing data
-
-f = open(&quot;data.json&quot;, w)
-
-# create object
-person = {&quot;name&quot;: &quot;test&quot;, ...}
-
-# store in file
-f.write(json.dumps(person))
-f.close()
-</code></pre><pre><code>import json
-
-# open file
-f = open(&quot;data.json&quot;)
-
-# read data
-line = f.readline()
-
-#deserialize
-data = json.loads(line)
-</code></pre><p>If you closely observe, we have done almost same in python, but what makes protocol buffer so special ? . The protocol buffer message size is 3 to 10 times smaller, meaning we can store more efficiently or transport easily over slow networks. They are also 20 to 100 times faster . They are not schemaless unlike json, which makes it less prone to breaking changes over the time. It provides easy language interoperability.</p>
-<h2 id="when-should-you-use-it-">When should you use it ?</h2>
-<p>Protocol Buffer offer compelling advantages over other data formats for sending data over wire being smaller in size and faster. They are best suited for internal service communication. We can use them for browser to server communication, but being non readable, they pose debugging and development challenges.</p>
+                    <p>It is a way to create virtual environment by using an isolated process on host Operating System.</p>
+<p>The isolated process has its own set of file system resources and subordinate processes. The container can be thought of as a sandbox to run applications separately without affecting others. In layman terms, it is virtualisation on the top of operating system. A single container might be used to run anything from a small microservice or software process to a larger application. Inside a container are all the necessary executables, binary code, libraries, and configuration files.</p>
+<p>Compared to virtualisation they don’t contain the operating system images, so they are light weight and have less overhead.</p>
+<h2 id="why-to-use-">Why to use ?</h2>
+<p>Containers have vastly streamlined the application development, build and deployment process. They have less overhead unlike the traditional virtual machines do heavy lifting. They are more efficient as they allow applications to be more rapidly deployed, patched, or scaled. They support agile and DevOps efforts to accelerate development, test, and production cycles. Applications running in containers can be deployed easily to multiple different operating systems and hardware platforms.</p>
 
 <style>
 .canon { background: white; width: 100%; height: auto;}
@@ -183,7 +122,7 @@ data = json.loads(line)
     
     <article class="read-next-card">
         <header class="read-next-card-header">
-            <h3><span>More in</span> <a href="/tags/golang">Golang</a></h3>
+            <h3><span>More in</span> <a href="/tags/container">Container</a></h3>
         </header>
         <div class="read-next-card-content">
             <ul>
@@ -191,27 +130,34 @@ data = json.loads(line)
             </ul>
         </div>
     </article>
-<article class="post-card post
- no-image
+
+
+            <article class="post-card post
+
+
  ">
 
+        
+            <a class="post-card-image-link" href="http://sanzay.me/post/protocol-buffer-intro/">
+                <img class="post-card-image"src="/images/protocol_buffer.png" alt="Protocol Buffer Basics"/>
+            </a>
         
     
         <div class="post-card-content">
     
-            <a class="post-card-content-link" href="http://sanzay.me/post/container-101/">
+            <a class="post-card-content-link" href="http://sanzay.me/post/protocol-buffer-intro/">
     
                 <header class="post-card-header">
                     
                         
-                        <div class="post-card-primary-tag">Container</div>
+                        <div class="post-card-primary-tag">Golang</div>
                     
 
-                    <h2 class="post-card-title">Container 101</h2>
+                    <h2 class="post-card-title">Protocol Buffer Basics</h2>
                 </header>
     
                 <section class="post-card-excerpt">
-                    <p><p>It is a way to create virtual environment by using an isolated process on host Operating System.</p></p>
+                    <p><p>It is yet another data format, just like XML or JSON. It is smaller and faster to transport over wire than JSON or XML.</p></p>
                 </section>
     
             </a>
@@ -226,8 +172,8 @@ data = json.loads(line)
                     </ul>
                     <div class="post-card-byline-content">
                         <span>Sanjay Pandey</span>
-                        <span class="post-card-byline-date"><time datetime="2019-129-09">14 September 2019</time>
-                            <span class="bull">&bull;</span> 1 min read</span>
+                        <span class="post-card-byline-date"><time datetime="2020-125-05">16 May 2020</time>
+                            <span class="bull">&bull;</span> 3 min read</span>
                     </div>
                 </footer>
     
@@ -235,8 +181,6 @@ data = json.loads(line)
 
 </article>
     
-
-            
         </div>
     </div>
 </aside>
@@ -244,7 +188,7 @@ data = json.loads(line)
 
         <footer class="site-footer outer">
             <div class="site-footer-content inner">
-                <section class="copyright"><a href="http://sanzay.me/">Sanjay Pandey</a> &copy; 2020</section>
+                <section class="copyright"><a href="http://sanzay.me/">Sanjay Pandey</a> &copy; 2019</section>
                 <nav class="site-footer-nav">
                     <a href="http://sanzay.me/">Latest Posts</a>
                     
